@@ -2,6 +2,8 @@ package fiji.plugin.trackmate.gui;
 
 import java.util.List;
 
+import org.scijava.Context;
+
 import fiji.plugin.trackmate.Settings;
 import fiji.plugin.trackmate.TrackMate;
 import fiji.plugin.trackmate.features.edges.EdgeAnalyzer;
@@ -15,6 +17,11 @@ public class ManualTrackingGUIController extends TrackMateGUIController
 	public ManualTrackingGUIController( final TrackMate trackmate )
 	{
 		super( trackmate );
+	}
+
+	public ManualTrackingGUIController( final Context context, final TrackMate trackmate )
+	{
+		super( context, trackmate );
 	}
 
 	@Override
