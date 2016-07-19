@@ -1,5 +1,8 @@
 package fiji.plugin.trackmate.providers;
 
+import org.scijava.plugin.Plugin;
+import org.scijava.service.Service;
+
 import fiji.plugin.trackmate.features.track.TrackAnalyzer;
 
 /**
@@ -9,6 +12,7 @@ import fiji.plugin.trackmate.features.track.TrackAnalyzer;
  * manner. For instance: POSITION_X, MAX_INTENSITY, etc... They must be suitable
  * to be used as a attribute key in an xml file.
  */
+@Plugin(type = Service.class)
 public class TrackAnalyzerProvider extends AbstractProvider< TrackAnalyzer >
 {
 

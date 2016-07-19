@@ -1,7 +1,5 @@
 package fiji.plugin.trackmate.providers;
 
-import fiji.plugin.trackmate.TrackMateModule;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,20 +7,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.scijava.Context;
 import org.scijava.InstantiableException;
 import org.scijava.log.LogService;
+import org.scijava.plugin.AbstractPTService;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.PluginInfo;
-import org.scijava.plugin.PluginService;
 
-public abstract class AbstractProvider< K extends TrackMateModule >
+import fiji.plugin.trackmate.TrackMateModule;
+import fiji.plugin.trackmate.TrackMateService;
+
+public abstract class AbstractProvider< K extends TrackMateModule > extends AbstractPTService<K> implements TrackMateService
 {
 	private final Class< K > cl;
+
+	@Parameter
+	private LogService log;
 
 	public AbstractProvider( final Class< K > cl )
 	{
 		this.cl = cl;
+	}
+
+	@Override
+	public void initialize() {
 		registerModules();
+	}
+
+	@Override
+	public Class< K > getPluginType() {
+		return cl;
 	}
 
 	protected List< String > keys;
@@ -35,10 +48,7 @@ public abstract class AbstractProvider< K extends TrackMateModule >
 
 	private void registerModules()
 	{
-		final Context context = new Context( LogService.class, PluginService.class );
-		final LogService log = context.getService( LogService.class );
-		final PluginService pluginService = context.getService( PluginService.class );
-		final List< PluginInfo< K >> infos = pluginService.getPluginsOfType( cl );
+		final List< PluginInfo< K >> infos = getPlugins();
 
 		final Comparator< PluginInfo< K >> priorityComparator = new Comparator< PluginInfo< K > >()
 				{

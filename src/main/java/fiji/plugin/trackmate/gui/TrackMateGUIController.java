@@ -36,6 +36,7 @@ import javax.swing.event.ChangeListener;
 import org.scijava.AbstractContextual;
 import org.scijava.Context;
 import org.scijava.log.LogService;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.PluginService;
 
 import fiji.plugin.trackmate.Logger;
@@ -112,18 +113,25 @@ public class TrackMateGUIController extends AbstractContextual implements Action
 
 	protected final TrackMateGUIModel guimodel;
 
+	@Parameter
 	protected SpotAnalyzerProvider spotAnalyzerProvider;
 
+	@Parameter
 	protected EdgeAnalyzerProvider edgeAnalyzerProvider;
 
+	@Parameter
 	protected TrackAnalyzerProvider trackAnalyzerProvider;
 
+	@Parameter
 	protected DetectorProvider detectorProvider;
 
+	@Parameter
 	protected ViewProvider viewProvider;
 
+	@Parameter
 	protected TrackerProvider trackerProvider;
 
+	@Parameter
 	protected ActionProvider actionProvider;
 
 	protected DetectorConfigurationDescriptor detectorConfigurationDescriptor;
@@ -499,13 +507,7 @@ public class TrackMateGUIController extends AbstractContextual implements Action
 
 	protected void createProviders()
 	{
-		spotAnalyzerProvider = new SpotAnalyzerProvider();
-		edgeAnalyzerProvider = new EdgeAnalyzerProvider();
-		trackAnalyzerProvider = new TrackAnalyzerProvider();
-		detectorProvider = new DetectorProvider();
-		viewProvider = new ViewProvider();
-		trackerProvider = new TrackerProvider();
-		actionProvider = new ActionProvider();
+		// NB: No action needed.
 	}
 
 	/**

@@ -3,6 +3,9 @@ package fiji.plugin.trackmate;
 import static fiji.plugin.trackmate.tracking.TrackerKeys.KEY_GAP_CLOSING_MAX_DISTANCE;
 import static fiji.plugin.trackmate.tracking.TrackerKeys.KEY_GAP_CLOSING_MAX_FRAME_GAP;
 import static fiji.plugin.trackmate.tracking.TrackerKeys.KEY_LINKING_MAX_DISTANCE;
+
+import org.scijava.Context;
+
 import fiji.plugin.trackmate.action.ISBIChallengeExporter;
 import fiji.plugin.trackmate.io.TmXmlReader;
 import fiji.plugin.trackmate.providers.DetectorProvider;
@@ -40,11 +43,12 @@ public class TrackMateBatch
 
 		final String[] trackmateFiles = rootFolder.list( filter );
 
-		final DetectorProvider detectorProvider = new DetectorProvider();
-		final TrackerProvider trackerProvider = new TrackerProvider();
-		final SpotAnalyzerProvider spotAnalyzerProvider = new SpotAnalyzerProvider();
-		final EdgeAnalyzerProvider edgeAnalyzerProvider = new EdgeAnalyzerProvider();
-		final TrackAnalyzerProvider trackAnalyzerProvider = new TrackAnalyzerProvider();
+		final Context context = new Context();
+		final DetectorProvider detectorProvider = context.service(DetectorProvider.class);
+		final TrackerProvider trackerProvider = context.service(TrackerProvider.class);
+		final SpotAnalyzerProvider spotAnalyzerProvider = context.service(SpotAnalyzerProvider.class);
+		final EdgeAnalyzerProvider edgeAnalyzerProvider = context.service(EdgeAnalyzerProvider.class);
+		final TrackAnalyzerProvider trackAnalyzerProvider = context.service(TrackAnalyzerProvider.class);
 
 		for ( final String trackmateFile : trackmateFiles )
 		{

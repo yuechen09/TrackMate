@@ -553,7 +553,7 @@ public class TrackMateRunner_ extends TrackMatePlugIn_
 		final Settings s = super.createSettings( imp );
 
 		s.clearSpotAnalyzerFactories();
-		final SpotAnalyzerProvider spotAnalyzerProvider = new SpotAnalyzerProvider();
+		final SpotAnalyzerProvider spotAnalyzerProvider = context().service(SpotAnalyzerProvider.class);
 		final List< String > spotAnalyzerKeys = spotAnalyzerProvider.getKeys();
 		for ( final String key : spotAnalyzerKeys )
 		{
@@ -562,7 +562,7 @@ public class TrackMateRunner_ extends TrackMatePlugIn_
 		}
 
 		s.clearEdgeAnalyzers();
-		final EdgeAnalyzerProvider edgeAnalyzerProvider = new EdgeAnalyzerProvider();
+		final EdgeAnalyzerProvider edgeAnalyzerProvider = context().service(EdgeAnalyzerProvider.class);
 		final List< String > edgeAnalyzerKeys = edgeAnalyzerProvider.getKeys();
 		for ( final String key : edgeAnalyzerKeys )
 		{
@@ -571,7 +571,7 @@ public class TrackMateRunner_ extends TrackMatePlugIn_
 		}
 
 		s.clearTrackAnalyzers();
-		final TrackAnalyzerProvider trackAnalyzerProvider = new TrackAnalyzerProvider();
+		final TrackAnalyzerProvider trackAnalyzerProvider = context().service(TrackAnalyzerProvider.class);
 		final List< String > trackAnalyzerKeys = trackAnalyzerProvider.getKeys();
 		for ( final String key : trackAnalyzerKeys )
 		{

@@ -1,7 +1,11 @@
 package fiji.plugin.trackmate.providers;
 
+import org.scijava.plugin.Plugin;
+import org.scijava.service.Service;
+
 import fiji.plugin.trackmate.tracking.SpotTrackerFactory;
 
+@Plugin(type = Service.class)
 public class TrackerProvider extends AbstractProvider< SpotTrackerFactory >
 {
 

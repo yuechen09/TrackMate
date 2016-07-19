@@ -1,7 +1,11 @@
 package fiji.plugin.trackmate.providers;
 
+import org.scijava.plugin.Plugin;
+import org.scijava.service.Service;
+
 import fiji.plugin.trackmate.action.TrackMateActionFactory;
 
+@Plugin(type = Service.class)
 public class ActionProvider extends AbstractProvider< TrackMateActionFactory >
 {
 
