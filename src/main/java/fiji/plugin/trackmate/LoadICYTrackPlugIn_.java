@@ -160,7 +160,7 @@ public class LoadICYTrackPlugIn_ extends LoadTrackMatePlugIn_ implements BaseTra
 		trackmate.computeTrackFeatures( true );
 
 		// Create a new controller for the new GUI
-		final TrackMateGUIController controller = new TrackMateGUIController( trackmate );
+		final TrackMateGUIController controller = new TrackMateGUIController( context(), trackmate );
 
 		// Spot, edge and track analyzers: Add them all
 		final SpotAnalyzerProvider spotAnalyzerProvider = controller.getSpotAnalyzerProvider();

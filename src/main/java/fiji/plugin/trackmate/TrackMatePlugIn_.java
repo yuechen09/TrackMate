@@ -63,7 +63,7 @@ public class TrackMatePlugIn_ implements BaseTrackMatePlugIn
 		 * Launch GUI.
 		 */
 
-		final TrackMateGUIController controller = new TrackMateGUIController( trackmate );
+		final TrackMateGUIController controller = new TrackMateGUIController( context(), trackmate );
 		if ( imp != null )
 		{
 			GuiUtils.positionWindow( controller.getGUI(), imp.getWindow() );

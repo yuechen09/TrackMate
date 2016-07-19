@@ -65,7 +65,7 @@ public class ManualTrackingPlugIn_ extends TrackMatePlugIn_
 		 * Launch GUI.
 		 */
 
-		final ManualTrackingGUIController controller = new ManualTrackingGUIController( trackmate );
+		final ManualTrackingGUIController controller = new ManualTrackingGUIController( context(), trackmate );
 		if ( imp != null )
 		{
 			GuiUtils.positionWindow( controller.getGUI(), imp.getWindow() );

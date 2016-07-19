@@ -194,7 +194,7 @@ public class LoadTrackMatePlugIn_ extends SomeDialogDescriptor implements BaseTr
 			// trackmate.computeTrackFeatures(true);
 		}
 
-		controller = new TrackMateGUIController( trackmate );
+		controller = new TrackMateGUIController( context(), trackmate );
 
 		// We feed then the reader with the providers taken from the NEW
 		// controller.

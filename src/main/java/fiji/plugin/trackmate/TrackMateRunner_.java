@@ -401,7 +401,7 @@ public class TrackMateRunner_ extends TrackMatePlugIn_
 						imp.show();
 					}
 					GuiUtils.userCheckImpDimensions( imp );
-					final TrackMateGUIController controller = new TrackMateGUIController( trackmate );
+					final TrackMateGUIController controller = new TrackMateGUIController( context(), trackmate );
 					if ( imp != null )
 					{
 						GuiUtils.positionWindow( controller.getGUI(), imp.getWindow() );
@@ -510,7 +510,7 @@ public class TrackMateRunner_ extends TrackMatePlugIn_
 						 * And show GUI.
 						 */
 
-						final TrackMateGUIController controller = new TrackMateGUIController( trackmate );
+						final TrackMateGUIController controller = new TrackMateGUIController( context(), trackmate );
 						// GUI position
 						GuiUtils.positionWindow( controller.getGUI(), settings.imp.getWindow() );
 

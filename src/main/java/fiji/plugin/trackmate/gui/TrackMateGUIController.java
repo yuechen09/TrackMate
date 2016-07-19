@@ -288,7 +288,7 @@ public class TrackMateGUIController extends AbstractContextual implements Action
 	 */
 	public TrackMateGUIController createOn( final TrackMate trackmate )
 	{
-		return new TrackMateGUIController( trackmate );
+		return new TrackMateGUIController( context(), trackmate );
 	}
 
 	/**
