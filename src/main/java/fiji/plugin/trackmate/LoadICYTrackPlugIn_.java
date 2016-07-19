@@ -28,7 +28,7 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-public class LoadICYTrackPlugIn_ extends LoadTrackMatePlugIn_ implements PlugIn
+public class LoadICYTrackPlugIn_ extends LoadTrackMatePlugIn_ implements BaseTrackMatePlugIn
 {
 
 	private static final String KEY = "ICY_LOADER";

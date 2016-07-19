@@ -6,9 +6,8 @@ import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
 import ij.WindowManager;
-import ij.plugin.PlugIn;
 
-public class TrackMatePlugIn_ implements PlugIn
+public class TrackMatePlugIn_ implements BaseTrackMatePlugIn
 {
 
 	protected TrackMate trackmate;

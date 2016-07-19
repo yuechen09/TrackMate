@@ -42,7 +42,7 @@ import ij.IJ;
 import ij.ImageJ;
 import ij.plugin.PlugIn;
 
-public class LoadTrackMatePlugIn_ extends SomeDialogDescriptor implements PlugIn
+public class LoadTrackMatePlugIn_ extends SomeDialogDescriptor implements BaseTrackMatePlugIn
 {
 
 	private JFrame frame;
