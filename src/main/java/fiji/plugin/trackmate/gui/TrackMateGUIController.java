@@ -33,11 +33,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.scijava.AbstractContextual;
+import org.scijava.Context;
+import org.scijava.log.LogService;
+import org.scijava.plugin.PluginService;
+
 import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
 import fiji.plugin.trackmate.SelectionModel;
 import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.TrackMate;
+import fiji.plugin.trackmate.TrackMateService;
 import fiji.plugin.trackmate.action.AbstractTMAction;
 import fiji.plugin.trackmate.action.ExportAllSpotsStatsAction;
 import fiji.plugin.trackmate.action.ExportStatsToIJAction;
@@ -87,7 +93,7 @@ import fiji.plugin.trackmate.visualization.trackscheme.TrackScheme;
 import ij.IJ;
 import ij.Prefs;
 
-public class TrackMateGUIController implements ActionListener
+public class TrackMateGUIController extends AbstractContextual implements ActionListener
 {
 
 	/*
@@ -180,8 +186,13 @@ public class TrackMateGUIController implements ActionListener
 	 * CONSTRUCTOR
 	 */
 
-	public TrackMateGUIController( final TrackMate trackmate )
+	public TrackMateGUIController( final TrackMate trackmate ) {
+		this(new Context(LogService.class, PluginService.class, TrackMateService.class), trackmate);
+	}
+
+	public TrackMateGUIController( final Context context, final TrackMate trackmate )
 	{
+		setContext(context);
 
 		// I can't stand the metal look. If this is a problem, contact me
 		// (jeanyves.tinevez@gmail.com)
