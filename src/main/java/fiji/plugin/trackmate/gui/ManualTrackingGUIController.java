@@ -14,6 +14,7 @@ import fiji.plugin.trackmate.gui.descriptors.WizardPanelDescriptor;
 public class ManualTrackingGUIController extends TrackMateGUIController
 {
 
+	@Deprecated
 	public ManualTrackingGUIController( final TrackMate trackmate )
 	{
 		super( trackmate );

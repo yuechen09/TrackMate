@@ -186,6 +186,7 @@ public class TrackMateGUIController extends AbstractContextual implements Action
 	 * CONSTRUCTOR
 	 */
 
+	@Deprecated
 	public TrackMateGUIController( final TrackMate trackmate ) {
 		this(new Context(LogService.class, PluginService.class, TrackMateService.class), trackmate);
 	}
