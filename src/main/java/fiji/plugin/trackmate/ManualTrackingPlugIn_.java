@@ -14,7 +14,7 @@ import ij.WindowManager;
 import ij.plugin.PlugIn;
 
 
-public class ManualTrackingPlugIn_ extends TrackMatePlugIn_ implements PlugIn
+public class ManualTrackingPlugIn_ extends TrackMatePlugIn_
 {
 
 	/**
