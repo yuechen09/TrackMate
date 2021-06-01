@@ -1,3 +1,24 @@
+/*-
+ * #%L
+ * Fiji distribution of ImageJ for the life sciences.
+ * %%
+ * Copyright (C) 2010 - 2021 Fiji developers.
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
 package fiji.plugin.trackmate.tracking.overlap;
 
 import static fiji.plugin.trackmate.io.IOUtils.readDoubleAttribute;
@@ -28,8 +49,8 @@ public class OverlapTrackerFactory implements SpotTrackerFactory
 
 	/**
 	 * The key to the parameter that stores scale factor parameter. The scale
-	 * factor allows for enlarging (>1) or shrinking (<1) the spot shapes before
-	 * computing their IoU. Values are strictly positive {@link Double}s.
+	 * factor allows for enlarging (&gt;1) or shrinking (&lt;1) the spot shapes
+	 * before computing their IoU. Values are strictly positive {@link Double}s.
 	 */
 	public static final String KEY_SCALE_FACTOR = "SCALE_FACTOR";
 
@@ -45,8 +66,8 @@ public class OverlapTrackerFactory implements SpotTrackerFactory
 
 	/**
 	 * The key to the parameter that stores how the IoU should be calculated.
-	 * There are two methods specified as strings: {@value #FAST_CALCULATION}
-	 * and {@value #PRECISE_CALCULATION}.
+	 * There are two methods specified as strings: <code>FAST_CALCULATION</code>
+	 * and <code>PRECISE_CALCULATION</code>.
 	 */
 	public static final String KEY_IOU_CALCULATION = "IOU_CALCULATION";
 
