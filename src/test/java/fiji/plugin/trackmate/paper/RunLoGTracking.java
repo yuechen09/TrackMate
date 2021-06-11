@@ -1,6 +1,7 @@
 package fiji.plugin.trackmate.paper;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 
 import fiji.plugin.trackmate.Logger;
@@ -10,10 +11,12 @@ import fiji.plugin.trackmate.TrackMate;
 import fiji.plugin.trackmate.action.ISBIChallengeExporter;
 import fiji.plugin.trackmate.detection.DetectorKeys;
 import fiji.plugin.trackmate.detection.LogDetectorFactory;
+import fiji.plugin.trackmate.io.TmXmlWriter;
 import fiji.plugin.trackmate.tracking.LAPUtils;
 import fiji.plugin.trackmate.tracking.TrackerKeys;
 import fiji.plugin.trackmate.tracking.kalman.KalmanTrackerFactory;
 import fiji.plugin.trackmate.tracking.sparselap.SimpleSparseLAPTrackerFactory;
+import fiji.plugin.trackmate.util.TMUtils;
 import ij.IJ;
 import ij.ImagePlus;
 
@@ -23,6 +26,7 @@ public class RunLoGTracking
 	{
 		final String rootDataFolder = "C:/Users/tinevez/Desktop/TrackMatePaper/Data/ISBIChallengeAccuracy/images";
 		final String saveDataFolder = "C:/Users/tinevez/Desktop/TrackMatePaper/Data/ISBIChallengeAccuracy/results-log";
+		final String saveTrackMateFolder = "C:/Users/tinevez/Desktop/TrackMatePaper/Data/ISBIChallengeAccuracy/results-log-trackmate";
 		final String[] categories = { "MICROTUBULE" };
 
 		for ( final String category : categories )
@@ -35,16 +39,19 @@ public class RunLoGTracking
 			{
 				final String testName = imFile.getName().substring( 0, imFile.getName().lastIndexOf( '.' ) );
 				final File saveFolder = Paths.get( saveDataFolder, category, testName ).toFile();
-				paramSweep( imFile, saveFolder );
+				final File saveTrackMate = Paths.get( saveTrackMateFolder, category, testName ).toFile();
+				paramSweep( imFile, saveFolder, saveTrackMate );
 			}
 		}
 		System.out.println( "Finished!" );
 	}
 
-	private static void paramSweep( final File imFile, final File saveFolder )
+	private static void paramSweep( final File imFile, final File saveFolder, final File saveTrackMateFolder )
 	{
 		if ( !saveFolder.exists() )
 			saveFolder.mkdirs();
+		if ( !saveTrackMateFolder.exists() )
+			saveTrackMateFolder.mkdirs();
 
 		System.out.println( " - " + imFile );
 		final ImagePlus imp = IJ.openImage( imFile.getAbsolutePath() );
@@ -93,6 +100,21 @@ public class RunLoGTracking
 
 				final File exportFile = Paths.get( saveFolder.getAbsolutePath(), exportName ).toFile();
 				ISBIChallengeExporter.exportToFile( model, settings, exportFile, Logger.VOID_LOGGER );
+
+				final File trackmateFile = Paths.get( saveTrackMateFolder.getAbsolutePath(), exportName ).toFile();
+				final TmXmlWriter writer = new TmXmlWriter( trackmateFile, Logger.VOID_LOGGER );
+				writer.appendLog( "Created on the " + TMUtils.getCurrentTimeString() + " by parameter sweep" );
+				writer.appendSettings( settings );
+				writer.appendModel( model );
+				writer.appendGUIState( "ChooseTracker" );
+				try
+				{
+					writer.writeToFile();
+				}
+				catch ( final IOException e )
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -124,6 +146,21 @@ public class RunLoGTracking
 
 				final File exportFile = Paths.get( saveFolder.getAbsolutePath(), exportName ).toFile();
 				ISBIChallengeExporter.exportToFile( model, settings, exportFile, Logger.VOID_LOGGER );
+
+				final File trackmateFile = Paths.get( saveTrackMateFolder.getAbsolutePath(), exportName ).toFile();
+				final TmXmlWriter writer = new TmXmlWriter( trackmateFile, Logger.VOID_LOGGER );
+				writer.appendLog( "Created on the " + TMUtils.getCurrentTimeString() + " by parameter sweep" );
+				writer.appendSettings( settings );
+				writer.appendModel( model );
+				writer.appendGUIState( "ChooseTracker" );
+				try
+				{
+					writer.writeToFile();
+				}
+				catch ( final IOException e )
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 	}
