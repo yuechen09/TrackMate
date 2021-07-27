@@ -817,6 +817,15 @@ public class SpotEditTool extends AbstractTool implements MouseMotionListener, M
 		configPanel.setVisible( true );
 		logger = configPanel.getLogger();
 	}
+	
+	@Override
+	public void imageClosed( final ImagePlus image )
+	{
+		if ( image == imp )
+			imp = null;
+		displayers.remove( image );
+		super.imageClosed( image );
+	}
 
 	/*
 	 * INNER CLASSES

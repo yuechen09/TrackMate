@@ -65,7 +65,6 @@ import fiji.plugin.trackmate.SelectionChangeListener;
 import fiji.plugin.trackmate.SelectionModel;
 import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.util.OnRequestUpdater;
-import fiji.plugin.trackmate.util.OnRequestUpdater.Refreshable;
 import fiji.plugin.trackmate.util.TMUtils;
 import ij.measure.ResultsTable;
 
@@ -119,21 +118,22 @@ public class InfoPane extends JPanel implements SelectionChangeListener
 		headerList.add( 0, "Track ID" );
 		headers = headerList.toArray( new String[] {} );
 
-		this.updater = new OnRequestUpdater( new Refreshable()
-		{
-			@Override
-			public void refresh()
-			{
-				SwingUtilities.invokeLater( new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						update();
-					}
-				} );
-			}
-		} );
+		this.updater = null;
+//		new OnRequestUpdater( new Refreshable()
+//		{
+//			@Override
+//			public void refresh()
+//			{
+//				SwingUtilities.invokeLater( new Runnable()
+//				{
+//					@Override
+//					public void run()
+//					{
+//						update();
+//					}
+//				} );
+//			}
+//		}, this );
 		/*
 		 * Add a listener to ensure we remove this panel from the listener list
 		 * of the model

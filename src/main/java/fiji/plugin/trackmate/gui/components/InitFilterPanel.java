@@ -68,7 +68,8 @@ public class InitFilterPanel extends JPanel
 	public InitFilterPanel( final FeatureFilter filter, final Function< String, double[] > valueCollector )
 	{
 		this.valueCollector = valueCollector;
-		this.updater = new OnRequestUpdater( () -> thresholdChanged() );
+		this.updater = null; // new OnRequestUpdater( () -> thresholdChanged(),
+								// this );
 
 		final BorderLayout thisLayout = new BorderLayout();
 		this.setLayout( thisLayout );
@@ -119,7 +120,7 @@ public class InitFilterPanel extends JPanel
 		filterPanel.rdbtnBelow.setEnabled( false );
 		this.add( filterPanel, BorderLayout.CENTER );
 		filterPanel.setPreferredSize( new java.awt.Dimension( 300, 200 ) );
-		filterPanel.addChangeListener( e -> updater.doUpdate() );
+//		filterPanel.addChangeListener( e -> updater.doUpdate() );
 
 		refresh();
 	}
@@ -132,7 +133,7 @@ public class InitFilterPanel extends JPanel
 	{
 		values = valueCollector.apply( Spot.QUALITY );
 		filterPanel.refresh();
-		updater.doUpdate();
+//		updater.doUpdate();
 	}
 
 	/**

@@ -74,7 +74,7 @@ public class WizardPanel extends JPanel
 	public WizardPanel()
 	{
 		setLayout( new BorderLayout( 0, 0 ) );
-		this.animatorPanel = new AnimatorPanel();
+		this.animatorPanel = null; // new AnimatorPanel();
 
 		this.panelButtons = new JPanel();
 		panelButtons.setBorder( new EmptyBorder( 3, 3, 3, 3 ) );
@@ -122,7 +122,9 @@ public class WizardPanel extends JPanel
 
 	public void transition( final WizardPanelDescriptor to, final WizardPanelDescriptor from, final Direction direction )
 	{
-		animatorPanel.start( from, to, direction );
+//		animatorPanel.start( from, to, direction );
+		panelMain.add( to.getPanelComponent(), to.getPanelDescriptorIdentifier() ); // DEBUG
+		cardLayout.show( panelMain, to.getPanelDescriptorIdentifier() ); // DEBUG
 	}
 
 	private class AnimatorPanel extends JPanel implements Paintable

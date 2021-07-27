@@ -117,7 +117,7 @@ public class FilterGuiPanel extends JPanel implements ChangeListener
 		this.settings = settings;
 		this.target = target;
 		this.defaultFeature = defaultFeature;
-		this.updater = new OnRequestUpdater( () -> refresh() );
+		this.updater = null; // new OnRequestUpdater( () -> refresh(), this );
 
 		this.setLayout( new BorderLayout() );
 		setPreferredSize( new Dimension( 270, 500 ) );
