@@ -68,6 +68,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
@@ -486,6 +487,7 @@ public class LAPUtils {
 		debugTable.setFillsViewportHeight(true);
 		scrollPane.setRowHeaderView(rowHeader);
 		final JFrame frame = new JFrame("Segment cost matrix");
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.getContentPane().add(scrollPane);
 		frame.setSize(800, 600);
 		frame.setVisible(true);
@@ -513,6 +515,7 @@ public class LAPUtils {
 		final JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		final JFrame frame = new JFrame("Hungarian solution");
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.getContentPane().add(scrollPane);
 		frame.setVisible(true);
 	}

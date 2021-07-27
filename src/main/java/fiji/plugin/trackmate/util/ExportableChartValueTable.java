@@ -42,6 +42,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -72,6 +73,7 @@ public class ExportableChartValueTable extends JFrame
 			final String yUnits )
 	{
 		super( tableTitle );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setName( tableTitle );
 		setIconImage( Icons.PLOT_ICON.getImage() );
 		selectedFile = new File( new File( selectedFile ).getParent(), tableTitle.replaceAll( "\\.+$", "" ) + ".csv" ).getAbsolutePath();

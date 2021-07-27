@@ -47,6 +47,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -86,6 +87,7 @@ public class BranchTableView extends JFrame implements TrackMateModelView
 	public BranchTableView( final Model model, final SelectionModel selectionModel )
 	{
 		super( "Branch table" );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setIconImage( TRACKMATE_ICON.getImage() );
 		this.model = model;
 

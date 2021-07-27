@@ -25,6 +25,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  * Interface for classes that allows specifying what descriptors are traversed
@@ -45,7 +46,7 @@ public interface WizardSequence
 		final WizardController controller = new WizardController( this );
 		final JFrame frame = new JFrame();
 		frame.getContentPane().add( controller.getWizardPanel() );
-		frame.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.setSize( 350, 560 );
 		frame.setTitle( title );
 		controller.init();

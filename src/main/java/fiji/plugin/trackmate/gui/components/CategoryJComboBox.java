@@ -46,6 +46,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
+import javax.swing.WindowConstants;
 
 import com.itextpdf.text.Font;
 
@@ -322,6 +323,7 @@ public class CategoryJComboBox< K, V > extends JComboBox< Object >
 		} );
 
 		final JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.getContentPane().add( cb );
 		frame.setVisible( true );
 

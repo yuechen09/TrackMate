@@ -38,6 +38,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -189,6 +190,7 @@ public abstract class AbstractFeatureGrapher
 
 		// The frame
 		final JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.getContentPane().add( scrollPane );
 		frame.validate();
 		frame.setSize( new java.awt.Dimension( 520, 320 ) );
