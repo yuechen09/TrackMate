@@ -351,7 +351,7 @@ public class SpotEditToolConfigPanel extends JFrame
 		};
 
 		setSize( 487, 418 );
-		setDefaultCloseOperation( WindowConstants.HIDE_ON_CLOSE );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setVisible( true );
 	}
 

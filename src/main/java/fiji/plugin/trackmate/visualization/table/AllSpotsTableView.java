@@ -47,6 +47,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -91,6 +92,7 @@ public class AllSpotsTableView extends JFrame implements TrackMateModelView, Mod
 	public AllSpotsTableView( final Model model, final SelectionModel selectionModel, final DisplaySettings ds )
 	{
 		super( "All spots table" );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setIconImage( TRACKMATE_ICON.getImage() );
 		this.model = model;
 		this.selectionModel = selectionModel;

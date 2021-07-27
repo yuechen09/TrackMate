@@ -34,6 +34,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
 
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphOutline;
@@ -79,6 +80,8 @@ public class TrackSchemeFrame extends JFrame
 		this.trackScheme = trackScheme;
 		this.displaySettings = displaySettings;
 		this.graph = trackScheme.getGraph();
+
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
 		// Frame look
 		setIconImage( TRACK_SCHEME_ICON.getImage() );

@@ -39,6 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
 import org.scijava.command.Command;
 import org.scijava.plugin.Plugin;
@@ -134,6 +135,7 @@ public class ConfigTrackMateDisplaySettings implements Command
 		 */
 
 		final JFrame frame = new JFrame( frameName );
+		frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		frame.setIconImage( TRACKMATE_ICON.getImage() );
 		frame.getContentPane().add( configPanel );
 		frame.pack();

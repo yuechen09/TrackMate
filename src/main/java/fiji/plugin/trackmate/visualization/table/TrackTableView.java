@@ -49,6 +49,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -100,6 +101,7 @@ public class TrackTableView extends JFrame implements TrackMateModelView, ModelC
 	public TrackTableView( final Model model, final SelectionModel selectionModel, final DisplaySettings ds )
 	{
 		super( "Track tables" );
+		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 		setIconImage( TRACKMATE_ICON.getImage() );
 		this.model = model;
 		this.selectionModel = selectionModel;
