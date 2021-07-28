@@ -113,7 +113,7 @@ public class ConfigureViewsPanel extends JPanel
 				"Configure the display settings used in this current session.",
 				"TrackMate display settings" );
 		editor.setLocationRelativeTo( this.getParent() );
-		editor.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
+		editor.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 
 		final JButton btnEditSettings = new JButton( "Edit settings", EDIT_SETTINGS_ICON );
 		btnEditSettings.addActionListener( e -> editor.setVisible( !editor.isVisible() ) );
