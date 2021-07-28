@@ -59,7 +59,7 @@ public class TrackFilterDescriptor extends WizardPanelDescriptor
 				TrackBranchingAnalyzer.NUMBER_SPOTS,
 				featureSelector );
 
-		component.addChangeListener( e -> filterTracks() );
+//		component.addChangeListener( e -> filterTracks() );
 		this.targetPanel = component;
 	}
 

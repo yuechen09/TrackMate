@@ -34,6 +34,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EmptyStackException;
@@ -53,6 +54,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -82,7 +85,7 @@ public class FilterGuiPanel extends JPanel implements ChangeListener
 
 	private final List< ChangeListener > changeListeners = new ArrayList<>();
 
-	private final Model model;
+	private Model model;
 
 	private final JPanel allThresholdsPanel;
 
@@ -90,7 +93,7 @@ public class FilterGuiPanel extends JPanel implements ChangeListener
 
 	private final TrackMateObject target;
 
-	private final Settings settings;
+	private Settings settings;
 
 	private final String defaultFeature;
 
@@ -113,8 +116,8 @@ public class FilterGuiPanel extends JPanel implements ChangeListener
 			final FeatureDisplaySelector featureSelector )
 	{
 
-		this.model = model;
-		this.settings = settings;
+//		this.model = model;
+//		this.settings = settings;
 		this.target = target;
 		this.defaultFeature = defaultFeature;
 		this.updater = null; // new OnRequestUpdater( () -> refresh(), this );
@@ -198,6 +201,33 @@ public class FilterGuiPanel extends JPanel implements ChangeListener
 
 		btnAddThreshold.addActionListener( e -> addFilterPanel() );
 		btnRemoveThreshold.addActionListener( e -> removeThresholdPanel() );
+
+		addAncestorListener( new AncestorListener()
+		{
+
+			@Override
+			public void ancestorRemoved( final AncestorEvent event )
+			{}
+
+			@Override
+			public void ancestorMoved( final AncestorEvent event )
+			{}
+
+			@Override
+			public void ancestorAdded( final AncestorEvent event )
+			{
+				SwingUtilities.getWindowAncestor( FilterGuiPanel.this ).addWindowListener( new WindowAdapter()
+				{
+					@Override
+					public void windowClosing( final java.awt.event.WindowEvent e )
+					{
+						FilterGuiPanel.this.model = null;
+						FilterGuiPanel.this.settings = null;
+						System.out.println( "Closed filter gui panel." ); // DEBUG
+					};
+				} );
+			}
+		} );
 
 		/*
 		 * Initial values.

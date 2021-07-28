@@ -44,6 +44,7 @@ import static fiji.plugin.trackmate.gui.displaysettings.StyleElements.separator;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class DisplaySettingsPanel extends JPanel
 		super( new GridBagLayout() );
 
 		colorChooser = new JColorChooser();
-		styleElements = styleElements( ds );
+		styleElements = new ArrayList<>(); // styleElements( ds );
 
 		ds.listeners().add( () -> {
 			styleElements.forEach( StyleElement::update );

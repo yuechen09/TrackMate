@@ -22,9 +22,7 @@
 package fiji.plugin.trackmate.providers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.scijava.Context;
 import org.scijava.InstantiableException;
@@ -51,8 +49,6 @@ public abstract class AbstractProvider< K extends TrackMateModule >
 
 	protected List< String > disabled;
 
-	protected Map< String, K > implementations;
-
 	private void registerModules()
 	{
 		final Context context = TMUtils.getContext();
@@ -63,7 +59,6 @@ public abstract class AbstractProvider< K extends TrackMateModule >
 		keys = new ArrayList<>( infos.size() );
 		visibleKeys = new ArrayList<>( infos.size() );
 		disabled = new ArrayList<>( infos.size() );
-		implementations = new HashMap<>();
 
 		for ( final PluginInfo< K > info : infos )
 		{
@@ -77,7 +72,6 @@ public abstract class AbstractProvider< K extends TrackMateModule >
 				final K implementation = info.createInstance();
 				final String key = implementation.getKey();
 
-				implementations.put( key, implementation );
 				keys.add( key );
 				if ( info.isVisible() )
 					visibleKeys.add( key );
@@ -107,7 +101,27 @@ public abstract class AbstractProvider< K extends TrackMateModule >
 
 	public K getFactory( final String key )
 	{
-		return implementations.get( key );
+		final Context context = TMUtils.getContext();
+		final LogService log = context.getService( LogService.class );
+		final PluginService pluginService = context.getService( PluginService.class );
+		final List< PluginInfo< K > > infos = pluginService.getPluginsOfType( cl );
+		for ( final PluginInfo< K > info : infos )
+		{
+			if ( !info.isEnabled() )
+				continue;
+
+			try
+			{
+				final K implementation = info.createInstance();
+				if ( implementation.getKey().equals( key ) )
+					return implementation;
+			}
+			catch ( final InstantiableException e )
+			{
+				log.error( "Could not instantiate " + info.getClassName(), e );
+			}
+		}
+		return null;
 	}
 
 	public String echo()

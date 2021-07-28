@@ -64,7 +64,7 @@ public class HyperStackDisplayer extends AbstractTrackMateModelView
 
 		this.spotOverlay = createSpotOverlay( displaySettings );
 		this.trackOverlay = createTrackOverlay( displaySettings );
-		displaySettings.listeners().add( () -> refresh() );
+//		displaySettings.listeners().add( () -> refresh() );
 	}
 
 	public HyperStackDisplayer( final Model model, final SelectionModel selectionModel, final DisplaySettings displaySettings )

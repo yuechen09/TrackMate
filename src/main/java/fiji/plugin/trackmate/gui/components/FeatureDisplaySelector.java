@@ -28,7 +28,6 @@ import static fiji.plugin.trackmate.gui.displaysettings.DisplaySettings.TrackMat
 import static fiji.plugin.trackmate.gui.displaysettings.DisplaySettings.TrackMateObject.SPOTS;
 import static fiji.plugin.trackmate.gui.displaysettings.DisplaySettings.TrackMateObject.TRACKS;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -37,8 +36,6 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Collection;
@@ -63,7 +60,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import fiji.plugin.trackmate.Model;
-import fiji.plugin.trackmate.ModelChangeEvent;
 import fiji.plugin.trackmate.Settings;
 import fiji.plugin.trackmate.features.FeatureUtils;
 import fiji.plugin.trackmate.features.manual.ManualEdgeColorAnalyzer;
@@ -99,43 +95,48 @@ public class FeatureDisplaySelector
 
 	public JPanel createSelectorForSpots()
 	{
-		return createSelectorFor( TrackMateObject.SPOTS );
+		return createSelectorForImp( model, settings, TrackMateObject.SPOTS, ds );
 	}
 
 	public JPanel createSelectorForTracks()
 	{
-		return createSelectorFor( TRACKS );
+		return createSelectorForImp( model, settings, TRACKS, ds );
 	}
 
 	public JPanel createSelectorFor( final TrackMateObject target )
 	{
-		return new FeatureSelectorPanel( target );
+		return createSelectorForImp( model, settings, target, ds );
 	}
 
-	private TrackMateObject getColorByType( final TrackMateObject target )
+	private static final JPanel createSelectorForImp( final Model model, final Settings settings, final TrackMateObject target, final DisplaySettings ds )
+	{
+		return new FeatureSelectorPanel( model, settings, target, ds );
+	}
+
+	private static final TrackMateObject getColorByType( final TrackMateObject target, final DisplaySettings ds )
 	{
 		return target == SPOTS ? ds.getSpotColorByType() : ds.getTrackColorByType();
 	}
 
-	private String getColorByFeature( final TrackMateObject target )
+	private static final String getColorByFeature( final TrackMateObject target, final DisplaySettings ds )
 	{
 		return target == SPOTS ? ds.getSpotColorByFeature() : ds.getTrackColorByFeature();
 	}
 
-	private double getMin( final TrackMateObject target )
+	private static final double getMin( final TrackMateObject target, final DisplaySettings ds )
 	{
 		return target == SPOTS ? ds.getSpotMin() : ds.getTrackMin();
 	}
 
-	private double getMax( final TrackMateObject target )
+	private static final double getMax( final TrackMateObject target, final DisplaySettings ds )
 	{
 		return target == SPOTS ? ds.getSpotMax() : ds.getTrackMax();
 	}
 
-	private double[] autoMinMax( final TrackMateObject target )
+	private static final double[] autoMinMax( final Model model, final TrackMateObject target, final DisplaySettings ds )
 	{
-		final TrackMateObject type = getColorByType( target );
-		final String feature = getColorByFeature( target );
+		final TrackMateObject type = getColorByType( target, ds );
+		final String feature = getColorByFeature( target, ds );
 		return FeatureUtils.autoMinMax( model, type, feature );
 	}
 
@@ -186,45 +187,45 @@ public class FeatureDisplaySelector
 		 * Listen to new features appearing.
 		 */
 
-		if ( null != model )
-			model.addModelChangeListener( ( event ) -> {
-				if ( event.getEventID() == ModelChangeEvent.FEATURES_COMPUTED )
-				{
-					final LinkedHashMap< TrackMateObject, Collection< String > > features2 = new LinkedHashMap<>( categoriesIn.size() );
-					final HashMap< TrackMateObject, String > categoryNames2 = new HashMap<>( categoriesIn.size() );
-					final HashMap< String, String > featureNames2 = new HashMap<>();
-
-					for ( final TrackMateObject category : categoriesIn )
-					{
-						final Map< String, String > featureKeys = collectFeatureKeys( category, model, settings );
-						features2.put( category, featureKeys.keySet() );
-						featureNames2.putAll( featureKeys );
-
-						switch ( category )
-						{
-						case SPOTS:
-							categoryNames2.put( SPOTS, "Spot features:" );
-							break;
-
-						case EDGES:
-							categoryNames2.put( EDGES, "Edge features:" );
-							break;
-
-						case TRACKS:
-							categoryNames2.put( TRACKS, "Track features:" );
-							break;
-
-						case DEFAULT:
-							categoryNames2.put( DEFAULT, "Default:" );
-							break;
-
-						default:
-							throw new IllegalArgumentException( "Unknown object type: " + category );
-						}
-					}
-					cb.setItems( features2, featureNames2, categoryNames2 );
-				}
-			} );
+//		if ( null != model )
+//			model.addModelChangeListener( ( event ) -> {
+//				if ( event.getEventID() == ModelChangeEvent.FEATURES_COMPUTED )
+//				{
+//					final LinkedHashMap< TrackMateObject, Collection< String > > features2 = new LinkedHashMap<>( categoriesIn.size() );
+//					final HashMap< TrackMateObject, String > categoryNames2 = new HashMap<>( categoriesIn.size() );
+//					final HashMap< String, String > featureNames2 = new HashMap<>();
+//
+//					for ( final TrackMateObject category : categoriesIn )
+//					{
+//						final Map< String, String > featureKeys = collectFeatureKeys( category, model, settings );
+//						features2.put( category, featureKeys.keySet() );
+//						featureNames2.putAll( featureKeys );
+//
+//						switch ( category )
+//						{
+//						case SPOTS:
+//							categoryNames2.put( SPOTS, "Spot features:" );
+//							break;
+//
+//						case EDGES:
+//							categoryNames2.put( EDGES, "Edge features:" );
+//							break;
+//
+//						case TRACKS:
+//							categoryNames2.put( TRACKS, "Track features:" );
+//							break;
+//
+//						case DEFAULT:
+//							categoryNames2.put( DEFAULT, "Default:" );
+//							break;
+//
+//						default:
+//							throw new IllegalArgumentException( "Unknown object type: " + category );
+//						}
+//					}
+//					cb.setItems( features2, featureNames2, categoryNames2 );
+//				}
+//			} );
 
 		return cb;
 	}
@@ -233,12 +234,12 @@ public class FeatureDisplaySelector
 	 * Inner classes.
 	 */
 
-	private class FeatureSelectorPanel extends JPanel
+	private static final class FeatureSelectorPanel extends JPanel
 	{
 
 		private static final long serialVersionUID = 1L;
 
-		public FeatureSelectorPanel( final TrackMateObject target )
+		public FeatureSelectorPanel( final Model model, final Settings settings, final TrackMateObject target, final DisplaySettings ds )
 		{
 
 			final GridBagLayout layout = new GridBagLayout();
@@ -272,9 +273,9 @@ public class FeatureDisplaySelector
 			gbcPanelColorMap.gridy = 2;
 			add( panelColorMap, gbcPanelColorMap );
 
-			final CanvasColor canvasColor = new CanvasColor( target );
-			panelColorMap.setLayout( new BorderLayout() );
-			panelColorMap.add( canvasColor, BorderLayout.CENTER );
+//			final CanvasColor canvasColor = new CanvasColor( model, target, ds );
+//			panelColorMap.setLayout( new BorderLayout() );
+//			panelColorMap.add( canvasColor, BorderLayout.CENTER );
 
 			final JPanel panelMinMax = new JPanel();
 			final GridBagConstraints gbcPanelMinMax = new GridBagConstraints();
@@ -296,7 +297,7 @@ public class FeatureDisplaySelector
 			lblMin.setFont( SMALL_FONT );
 			panelMinMax.add( lblMin );
 
-			final JFormattedTextField ftfMin = new JFormattedTextField( Double.valueOf( getMin( target ) ) );
+			final JFormattedTextField ftfMin = new JFormattedTextField( Double.valueOf( getMin( target, ds ) ) );
 			ftfMin.setMaximumSize( new Dimension( 180, 2147483647 ) );
 			GuiUtils.selectAllOnFocus( ftfMin );
 			ftfMin.setHorizontalAlignment( SwingConstants.CENTER );
@@ -310,7 +311,7 @@ public class FeatureDisplaySelector
 			lblMax.setFont( SMALL_FONT );
 			panelMinMax.add( lblMax );
 
-			final JFormattedTextField ftfMax = new JFormattedTextField( Double.valueOf( getMax( target ) ) );
+			final JFormattedTextField ftfMax = new JFormattedTextField( Double.valueOf( getMax( target, ds ) ) );
 			ftfMax.setMaximumSize( new Dimension( 180, 2147483647 ) );
 			GuiUtils.selectAllOnFocus( ftfMax );
 			ftfMax.setHorizontalAlignment( SwingConstants.CENTER );
@@ -373,14 +374,14 @@ public class FeatureDisplaySelector
 				item.addActionListener( e -> ds.setColormap( cmap ) );
 				colormapMenu.add( item );
 			}
-			canvasColor.addMouseListener( new MouseAdapter()
-			{
-				@Override
-				public void mouseClicked( final MouseEvent e )
-				{
-					colormapMenu.show( canvasColor, e.getX(), e.getY() );
-				}
-			} );
+//			canvasColor.addMouseListener( new MouseAdapter()
+//			{
+//				@Override
+//				public void mouseClicked( final MouseEvent e )
+//				{
+//					colormapMenu.show( canvasColor, e.getX(), e.getY() );
+//				}
+//			} );
 
 			// Auto min max.
 			switch ( target )
@@ -389,13 +390,13 @@ public class FeatureDisplaySelector
 			{
 				cmbboxColor.addActionListener( e -> {
 					ds.setSpotColorBy( cmbboxColor.getSelectedCategory(), cmbboxColor.getSelectedItem() );
-					final boolean hasMinMax = !FEATURES_WITHOUT_MIN_MAX.contains( getColorByFeature( target ) );
+					final boolean hasMinMax = !FEATURES_WITHOUT_MIN_MAX.contains( getColorByFeature( target, ds ) );
 					ftfMin.setEnabled( hasMinMax );
 					ftfMax.setEnabled( hasMinMax );
 					btnAutoMinMax.setEnabled( hasMinMax );
-					if ( hasMinMax && !cmbboxColor.getSelectedItem().equals( getColorByFeature( target ) ) )
+					if ( hasMinMax && !cmbboxColor.getSelectedItem().equals( getColorByFeature( target, ds ) ) )
 					{
-						final double[] minmax = autoMinMax( target );
+						final double[] minmax = autoMinMax( model, target, ds );
 						ftfMin.setValue( Double.valueOf( minmax[ 0 ] ) );
 						ftfMax.setValue( Double.valueOf( minmax[ 1 ] ) );
 					}
@@ -414,13 +415,13 @@ public class FeatureDisplaySelector
 
 				cmbboxColor.addActionListener( e -> {
 					ds.setTrackColorBy( cmbboxColor.getSelectedCategory(), cmbboxColor.getSelectedItem() );
-					final boolean hasMinMax = !FEATURES_WITHOUT_MIN_MAX.contains( getColorByFeature( target ) );
+					final boolean hasMinMax = !FEATURES_WITHOUT_MIN_MAX.contains( getColorByFeature( target, ds ) );
 					ftfMin.setEnabled( hasMinMax );
 					ftfMax.setEnabled( hasMinMax );
 					btnAutoMinMax.setEnabled( hasMinMax );
-					if ( hasMinMax && !cmbboxColor.getSelectedItem().equals( getColorByFeature( target ) ) )
+					if ( hasMinMax && !cmbboxColor.getSelectedItem().equals( getColorByFeature( target, ds ) ) )
 					{
-						final double[] minmax = autoMinMax( target );
+						final double[] minmax = autoMinMax( model, target, ds );
 						ftfMin.setValue( Double.valueOf( minmax[ 0 ] ) );
 						ftfMax.setValue( Double.valueOf( minmax[ 1 ] ) );
 					}
@@ -440,45 +441,51 @@ public class FeatureDisplaySelector
 			}
 
 			btnAutoMinMax.addActionListener( e -> {
-				final double[] minmax = autoMinMax( target );
+				final double[] minmax = autoMinMax( model, target, ds );
 				ftfMin.setValue( Double.valueOf( minmax[ 0 ] ) );
 				ftfMax.setValue( Double.valueOf( minmax[ 1 ] ) );
 			} );
 
-			ds.listeners().add( () -> {
-				ftfMin.setValue( Double.valueOf( getMin( target ) ) );
-				ftfMax.setValue( Double.valueOf( getMax( target ) ) );
-				final String feature = getColorByFeature( target );
-				if ( feature != cmbboxColor.getSelectedItem() )
-					cmbboxColor.setSelectedItem( feature );
-
-				canvasColor.repaint();
-			} );
+//			ds.listeners().add( () -> {
+//				ftfMin.setValue( Double.valueOf( getMin( target, ds ) ) );
+//				ftfMax.setValue( Double.valueOf( getMax( target, ds ) ) );
+//				final String feature = getColorByFeature( target, ds );
+//				if ( feature != cmbboxColor.getSelectedItem() )
+////					cmbboxColor.setSelectedItem( feature );
+//
+//				canvasColor.repaint();
+//			} );
 
 			/*
 			 * Set current values.
 			 */
 
-			cmbboxColor.setSelectedItem( getColorByFeature( target ) );
+			cmbboxColor.setSelectedItem( getColorByFeature( target, ds ) );
 		}
 	}
 
-	private final class CanvasColor extends JComponent
+	private final static class CanvasColor extends JComponent
 	{
 
 		private static final long serialVersionUID = 1L;
 
 		private final TrackMateObject target;
 
-		public CanvasColor( final TrackMateObject target )
+		private final DisplaySettings ds;
+
+		private final Model model;
+
+		public CanvasColor( final Model model, final TrackMateObject target, final DisplaySettings ds )
 		{
+			this.model = model;
 			this.target = target;
+			this.ds = ds;
 		}
 
 		@Override
 		public void paint( final Graphics g )
 		{
-			final String feature = getColorByFeature( target );
+			final String feature = getColorByFeature( target, ds );
 			if ( !isEnabled() || FEATURES_WITHOUT_MIN_MAX.contains( feature ) )
 			{
 				g.setColor( this.getParent().getBackground() );
@@ -490,9 +497,9 @@ public class FeatureDisplaySelector
 			 * The color scale.
 			 */
 
-			final double[] autoMinMax = autoMinMax( target );
-			final double min = getMin( target );
-			final double max = getMax( target );
+			final double[] autoMinMax = autoMinMax( model, target, ds );
+			final double min = getMin( target, ds );
+			final double max = getMax( target, ds );
 			final double dataMin = autoMinMax[ 0 ];
 			final double dataMax = autoMinMax[ 1 ];
 			final Colormap colormap = ds.getColormap();
@@ -518,7 +525,7 @@ public class FeatureDisplaySelector
 			final FontMetrics fm = g.getFontMetrics();
 
 			final boolean isInt;
-			switch ( getColorByType( target ) )
+			switch ( getColorByType( target, ds ) )
 			{
 			case TRACKS:
 				isInt = model.getFeatureModel().getTrackFeatureIsInt().get( feature );
@@ -604,4 +611,5 @@ public class FeatureDisplaySelector
 		frame.pack();
 		frame.setVisible( true );
 	}
+
 }

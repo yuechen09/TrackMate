@@ -66,7 +66,7 @@ public class SpotFilterDescriptor extends WizardPanelDescriptor
 				Spot.QUALITY,
 				featureSelector );
 
-		component.addChangeListener( e -> filterSpots() );
+//		component.addChangeListener( e -> filterSpots() );
 		this.targetPanel = component;
 	}
 

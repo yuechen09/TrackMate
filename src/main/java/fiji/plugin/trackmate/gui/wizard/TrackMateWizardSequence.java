@@ -75,43 +75,43 @@ import fiji.plugin.trackmate.visualization.trackscheme.TrackScheme;
 public class TrackMateWizardSequence implements WizardSequence
 {
 
-	private final TrackMate trackmate;
+	private TrackMate trackmate;
 
-	private final SelectionModel selectionModel;
+	private SelectionModel selectionModel;
 
-	private final DisplaySettings displaySettings;
+	private DisplaySettings displaySettings;
 
 	private WizardPanelDescriptor current;
 
-	private final StartDialogDescriptor startDialogDescriptor;
+	private StartDialogDescriptor startDialogDescriptor;
 
-	private final Map< WizardPanelDescriptor, WizardPanelDescriptor > next;
+	private Map< WizardPanelDescriptor, WizardPanelDescriptor > next;
 
-	private final Map< WizardPanelDescriptor, WizardPanelDescriptor > previous;
+	private Map< WizardPanelDescriptor, WizardPanelDescriptor > previous;
 
-	private final LogPanelDescriptor2 logDescriptor;
+	private LogPanelDescriptor2 logDescriptor;
 
-	private final ChooseDetectorDescriptor chooseDetectorDescriptor;
+	private ChooseDetectorDescriptor chooseDetectorDescriptor;
 
-	private final ExecuteDetectionDescriptor executeDetectionDescriptor;
+	private ExecuteDetectionDescriptor executeDetectionDescriptor;
 
-	private final InitFilterDescriptor initFilterDescriptor;
+	private InitFilterDescriptor initFilterDescriptor;
 
-	private final SpotFilterDescriptor spotFilterDescriptor;
+	private SpotFilterDescriptor spotFilterDescriptor;
 
-	private final ChooseTrackerDescriptor chooseTrackerDescriptor;
+	private ChooseTrackerDescriptor chooseTrackerDescriptor;
 
-	private final ExecuteTrackingDescriptor executeTrackingDescriptor;
+	private ExecuteTrackingDescriptor executeTrackingDescriptor;
 
-	private final TrackFilterDescriptor trackFilterDescriptor;
+	private TrackFilterDescriptor trackFilterDescriptor;
 
-	private final ConfigureViewsDescriptor configureViewsDescriptor;
+	private ConfigureViewsDescriptor configureViewsDescriptor;
 
-	private final GrapherDescriptor grapherDescriptor;
+	private GrapherDescriptor grapherDescriptor;
 
-	private final ActionChooserDescriptor actionChooserDescriptor;
+	private ActionChooserDescriptor actionChooserDescriptor;
 
-	private final SaveDescriptor saveDescriptor;
+	private SaveDescriptor saveDescriptor;
 
 	public TrackMateWizardSequence( final TrackMate trackmate, final SelectionModel selectionModel, final DisplaySettings displaySettings )
 	{
@@ -147,6 +147,30 @@ public class TrackMateWizardSequence implements WizardSequence
 		this.next = getForwardSequence();
 		this.previous = getBackwardSequence();
 		current = startDialogDescriptor;
+	}
+
+	@Override
+	public void onClose()
+	{
+		actionChooserDescriptor = null;
+		chooseDetectorDescriptor = null;
+		chooseTrackerDescriptor = null;
+		configureViewsDescriptor = null;
+		current = null;
+		displaySettings = null;
+		executeDetectionDescriptor = null;
+		executeTrackingDescriptor = null;
+		grapherDescriptor = null;
+		initFilterDescriptor = null;
+		logDescriptor = null;
+		next = null;
+		previous = null;
+		saveDescriptor = null;
+		selectionModel = null;
+		spotFilterDescriptor = null;
+		startDialogDescriptor = null;
+		trackFilterDescriptor = null;
+		trackmate = null;
 	}
 
 	@Override
