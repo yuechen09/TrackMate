@@ -50,6 +50,8 @@ import javax.swing.WindowConstants;
 
 import com.itextpdf.text.Font;
 
+import fiji.plugin.trackmate.gui.GuiUtils;
+
 /**
  * A JcomboBox that displays categories, and return the category the selected
  * item belong to.
@@ -93,6 +95,12 @@ public class CategoryJComboBox< K, V > extends JComboBox< Object >
 		super();
 		this.invertMap = new HashMap< >();
 		setItems( items, itemNames, categoryNames );
+
+		GuiUtils.addOnClosingEvent( this, () -> {
+			this.setModel( new DefaultComboBoxModel<>() );
+			for ( final ActionListener actionListener : getActionListeners() )
+				this.removeActionListener( actionListener );
+		} );
 	}
 
 	public void setItems( final Map< K, Collection< V > > items, final Map< V, String > itemNames, final Map< K, String > categoryNames )
