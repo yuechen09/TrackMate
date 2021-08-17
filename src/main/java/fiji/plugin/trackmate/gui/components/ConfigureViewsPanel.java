@@ -37,6 +37,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 
 import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -432,9 +433,14 @@ public class ConfigureViewsPanel extends JPanel
 			setEnabled( panelTrackOptions, chkboxDisplayTracks.isSelected() );
 		};
 		l.displaySettingsChanged();
-		ds.listeners().add( l );
+//		ds.listeners().add( l );
 		spinnerDrawingZDepth.setEnabled( chckbxLimitZDepth.isSelected() );
 		fadeTrackBtnEnable.actionPerformed( null );
+		
+		GuiUtils.addOnClosingEvent( this, () -> {
+			ds.listeners().remove( l );
+			cmbboxTrackDisplayMode.setModel( new DefaultComboBoxModel<>() );
+		} );
 	}
 
 	private static final void setEnabled( final Container container, final boolean enabled )
