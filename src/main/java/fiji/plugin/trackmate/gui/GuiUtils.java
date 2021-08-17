@@ -32,12 +32,16 @@ import java.awt.Window;
 import java.awt.color.ColorSpace;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -241,5 +245,34 @@ public class GuiUtils
 			}
 
 		}
+	}
+
+	public static void addOnClosingEvent( final JComponent component, final Runnable runnable )
+	{
+		component.addAncestorListener( new AncestorListener()
+		{
+
+			@Override
+			public void ancestorRemoved( final AncestorEvent event )
+			{}
+
+			@Override
+			public void ancestorMoved( final AncestorEvent event )
+			{}
+
+			@Override
+			public void ancestorAdded( final AncestorEvent event )
+			{
+				SwingUtilities.getWindowAncestor( component ).addWindowListener( new WindowAdapter()
+				{
+					@Override
+					public void windowClosing( final java.awt.event.WindowEvent e )
+					{
+						runnable.run();
+						System.out.println( "Closed " + component ); // DEBUG
+					};
+				} );
+			}
+		} );
 	}
 }
