@@ -47,6 +47,8 @@ import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultButtonModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -461,6 +463,12 @@ public class FeatureDisplaySelector
 			 */
 
 			cmbboxColor.setSelectedItem( getColorByFeature( target, ds ) );
+			
+			
+			GuiUtils.addOnClosingEvent( this, () -> {
+				cmbboxColor.setModel( new DefaultComboBoxModel<>() );
+				btnAutoMinMax.setModel( new DefaultButtonModel() );
+			} );
 		}
 	}
 
