@@ -152,6 +152,7 @@ public class TrackMateWizardSequence implements WizardSequence
 	@Override
 	public void onClose()
 	{
+		System.out.println( "Closing sequence" ); // DEBUG
 		actionChooserDescriptor = null;
 		chooseDetectorDescriptor = null;
 		chooseTrackerDescriptor = null;
@@ -170,6 +171,7 @@ public class TrackMateWizardSequence implements WizardSequence
 		spotFilterDescriptor = null;
 		startDialogDescriptor = null;
 		trackFilterDescriptor = null;
+		trackmate.getModel().setLogger( Logger.VOID_LOGGER );
 		trackmate = null;
 	}
 
