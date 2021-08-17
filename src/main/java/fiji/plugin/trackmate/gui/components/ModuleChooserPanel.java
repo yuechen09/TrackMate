@@ -38,6 +38,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import fiji.plugin.trackmate.TrackMateModule;
+import fiji.plugin.trackmate.gui.GuiUtils;
 import fiji.plugin.trackmate.providers.AbstractProvider;
 
 public class ModuleChooserPanel< K extends TrackMateModule > extends JPanel
@@ -103,6 +104,8 @@ public class ModuleChooserPanel< K extends TrackMateModule > extends JPanel
 		} );
 
 		cmbbox.setSelectedItem( selectedKey );
+		
+		GuiUtils.addOnClosingEvent( this, () -> cmbbox.setModel( new DefaultComboBoxModel<>() ) );
 	}
 
 	public void setSelectedModuleKey( final String moduleKey )
