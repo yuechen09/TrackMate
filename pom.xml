@@ -145,6 +145,8 @@
 
 		<fontchooser.version>2.4</fontchooser.version>
 		<javaGeom.version>0.11.1</javaGeom.version>
+		<sonar.organization>yuechen09</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<repositories>
